@@ -5,8 +5,8 @@ import { App } from "./App";
 // unmount and cleanup DOM after the test is finished.
 afterEach(cleanup);
 
-it('App contains text "hello world"', () => {
-  const { queryByText } = render(<App />);
+it('App contains text "Studio Display"', () => {
+  const { queryAllByText } = render(<App />);
 
-  expect(queryByText(/Studio Display/i)).toBeTruthy();
+  expect(queryAllByText(/Studio Display/i)).toBeTruthy();
 });
