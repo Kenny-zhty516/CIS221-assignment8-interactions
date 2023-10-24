@@ -1,5 +1,6 @@
 import { useReducer } from "react";
 import { FeatureSelector } from "./components/feature-selector/feature-selector";
+import { FeatureCarousel } from "./components/feature-carousel/feature-carousel";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -18,7 +19,7 @@ const reducer = (state, action) => {
 };
 
 export function App() {
-  const glassSlider = [
+  const glassCarousel = [
     {
       description:
         "Standard glass has an industry-leading anti-reflective coating for viewing comfort and readability.",
@@ -62,7 +63,7 @@ export function App() {
     <FeatureSelector
       key={index}
       content={content}
-      selectedId={state.glassSelection}
+      selectedId={state.glassFeatureSelection}
       dispatch={dispatch}
     />
   ));
@@ -93,17 +94,8 @@ export function App() {
           </div>
         </div>
         <div className="flex flex-col md:flex-row">
-          <div className="w-full md:w-5/12 flex justify-between">
-            <div className="flex justify-center items-center w-1/12">
-              <span>&lt;</span>
-            </div>
-            <div className="p-8 bg-slate-50 rounded-xl w-5/6">
-              <div></div>
-              <img alt="" src="" />
-            </div>
-            <div className="flex justify-center items-center w-1/12">
-              <span>&gt;</span>
-            </div>
+          <div className="w-full md:w-5/12 ">
+            <FeatureCarousel content={glassCarousel} />
           </div>
           <div className="w-full md:w-7/12 md:pl-12">
             <h2 className="font-bold mb-4">Display</h2>
