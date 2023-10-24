@@ -1,12 +1,72 @@
-import { useState } from "react";
+import { useReducer } from "react";
+import { FeatureSelector } from "./components/feature-selector/feature-selector";
+import { FeatureCarousel } from "./components/feature-carousel/feature-carousel";
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "feature_selection_glass": {
+      return {
+        ...state,
+        glassSelection: action.detail.id,
+      };
+    }
+    default: {
+      return {
+        ...state,
+      };
+    }
+  }
+};
 
 export function App() {
-  const [priceSelection, setPriceSelection] = useState(0);
+  const glassCarousel = [
+    {
+      description:
+        "Standard glass has an industry-leading anti-reflective coating for viewing comfort and readability.",
+      imageAlt: "A front view of Studio Display with standard glass.",
+      imageSrc:
+        "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/studio-display-gallery-1-202203?wid=640&hei=528&fmt=p-jpg&qlt=95&.v=1675709041796",
+    },
+    {
+      description:
+        "Nano-texture glass further minimizes glare while delivering outstanding image quality in workspaces with bright light sources, like a lot of sunlight.",
+      imageAlt: "A front view of Studio Display with nano-texture glass.",
+      imageSrc:
+        "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/studio-display-gallery-2-202203?wid=320&hei=264&fmt=p-jpg&qlt=95&.v=1675709041798",
+    },
+  ];
+  const glassFeatures = [
+    {
+      id: "glass_1",
+      type: "glass",
+      title: "Standard glass",
+      price: "From $1599",
+      monthlyPrice: "or $133.25/mo. for 12 mo.*",
+    },
+    {
+      id: "glass_2",
+      type: "glass",
+      title: "Nano-texture glass",
+      price: "From $1899",
+      monthlyPrice: "or $158.25/mo. for 12 mo.*",
+    },
+  ];
 
-  const handlePriceClick = (priceIndex) => {
-    setPriceSelection(priceIndex);
-    console.log("New price selection", priceIndex);
+  const initialState = {
+    glassSliderSelection: 0,
+    glassFeatureSelection: glassFeatures[0].id,
   };
+
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  const glassFeatureOptions = glassFeatures.map((content, index) => (
+    <FeatureSelector
+      key={index}
+      content={content}
+      selectedId={state.glassFeatureSelection}
+      dispatch={dispatch}
+    />
+  ));
 
   return (
     <>
@@ -34,23 +94,8 @@ export function App() {
           </div>
         </div>
         <div className="flex flex-col md:flex-row">
-          <div className="w-full md:w-5/12 flex justify-between">
-            <div className="flex justify-center items-center w-1/12">
-              <span>&lt;</span>
-            </div>
-            <div className="p-8 bg-slate-50 rounded-xl w-5/6">
-              <div>
-                Standard glass has an industry-leading anti-reflective coating
-                for viewing comfort and readability.
-              </div>
-              <img
-                alt="A front view of Studio Display with standard glass."
-                src="https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/studio-display-gallery-1-202203?wid=640&hei=528&fmt=p-jpg&qlt=95&.v=1675709041796"
-              />
-            </div>
-            <div className="flex justify-center items-center w-1/12">
-              <span>&gt;</span>
-            </div>
+          <div className="w-full md:w-5/12 ">
+            <FeatureCarousel content={glassCarousel} />
           </div>
           <div className="w-full md:w-7/12 md:pl-12">
             <h2 className="font-bold mb-4">Display</h2>
@@ -63,41 +108,11 @@ export function App() {
               delivering outstanding image quality in workspaces with bright
               light sources.
             </div>
-            <div
-              className={`flex justify-between items-center cursor-pointer px-4 py-6 border rounded-xl mb-4 ${
-                priceSelection === 0
-                  ? "border-2 border-blue-400 cursor-default"
-                  : "cursor-pointer hover:bg-gray-50"
-              }`}
-              onClick={() => {
-                handlePriceClick(0);
-              }}
-            >
-              <div className="text-lg font-semibold">Standard glass</div>
-              <div className="text-right">
-                <div className="text-lg">From $1599</div>
-                <div>or $133.25/mo. for 12 mo.*</div>
-              </div>
-            </div>
-            <div
-              className={`flex justify-between items-center px-4 py-6 border rounded-xl mb-4 ${
-                priceSelection === 1
-                  ? "border-2 border-blue-400 cursor-default"
-                  : "cursor-pointer hover:bg-gray-50"
-              }`}
-              onClick={() => {
-                handlePriceClick(1);
-              }}
-            >
-              <div className="text-lg font-semibold">Nano-texture glass</div>
-              <div className="text-right">
-                <div className="text-lg">From $1899</div>
-                <div>or $158.25/mo. for 12 mo.*</div>
-              </div>
-            </div>
+            <div className="flex flex-col gap-4">{glassFeatureOptions}</div>
           </div>
         </div>
       </div>
+      <div className="mt-52"></div>
     </>
   );
 }

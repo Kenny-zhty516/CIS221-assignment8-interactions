@@ -4,8 +4,11 @@
   "search.exclude": {
     "package-lock.json": true
   },
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.codeActionsOnSave": { "source.fixAll.eslint": true },
+  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+  "editor.codeActionsOnSave": [
+    "source.addMissingImports",
+    "source.fixAll.eslint"
+  ],
   "editor.formatOnSave": true,
   "files.autoSave": "onFocusChange",
   "jest.showCoverageOnLoad": true, // Show code coverage when the project is launched
