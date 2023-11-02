@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const FeatureCarousel = ({ content }) => {
   const defaultSelectedIndex = 0;
@@ -45,11 +46,15 @@ const FeatureCarousel = ({ content }) => {
         className="flex justify-center items-center w-1/12 cursor-pointer"
         onClick={handlePrevClick}
       >
-        <span>&lt;</span>
+        {/* <span>&lt;</span> */}
+        <FaChevronLeft />
       </div>
       <div className="p-8 bg-slate-50 rounded-xl w-5/6">
         <div className=" overflow-hidden">
-          <div className="flex relative" style={style}>
+          <div
+            className="flex relative transition-[left] duration-200"
+            style={style}
+          >
             {elements}
           </div>
         </div>
@@ -58,7 +63,8 @@ const FeatureCarousel = ({ content }) => {
         className="flex justify-center items-center w-1/12 cursor-pointer"
         onClick={handleNextClick}
       >
-        <span>&gt;</span>
+        {/* <span>&gt;</span> */}
+        <FaChevronRight />
       </div>
     </div>
   );
